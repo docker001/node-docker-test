@@ -8,13 +8,13 @@ var koa    = require('koa'),
 var app = koa()
 router
 	.get('/get',function*(next){
-		this.body=yield this.mongo.collection('users').findOne()
+		this.body=yield this.mongo.db('test').collection('users').findOne()
 	})
 	.get('/post',function*(next){
-		this.body=yield this.mongo.collection('users').insert({a:2})
+		this.body=yield this.mongo.db('test').collection('users').insert({a:2})
 	})
 app
-	.use(mongo({host:process.env["MONGODB_HOST"]||'localhost',port:process.env["MONGODB_PORT"]||27017,user:process.env["MONGODB_USER"]||'',pass:process.env["MONGODB_PASS"]||' ',db:process.env["MONGODB_DB"]||'test'}))
+	.use(mongo({host:process.env["MONGODB_HOST"]||'localhost',port:process.env["MONGODB_PORT"]||27017,user:process.env["MONGODB_USER"]||'',pass:process.env["MONGODB_PASS"]||' ',db:'admin'}))
 	.use(logger())
 	.use(router.routes())
 	.use(router.allowedMethods())
