@@ -14,7 +14,7 @@ router
 		this.body=yield this.mongo.db('test').collection('users').insert({a:2})
 	})
 app
-	.use(mongo({host:process.env["MONGODB_HOST"]||'localhost',port:process.env["MONGODB_PORT"]||27017,user:process.env["MONGODB_USER"]||'',pass:process.env["MONGODB_PASS"]||' ',db:'admin'}))
+	.use(mongo({host:process.env["MONGODB_PORT_27017_TCP_ADDR"]||'localhost',port:process.env["MONGODB_PORT_27017_TCP_PORT"]||27017,user:process.env["MONGODB_ENV_MONGODB_USER"]||'',pass:process.env["MONGODB_ENV_MONGODB_PASS"]||' ',db:'admin'}))
 	.use(logger())
 	.use(router.routes())
 	.use(router.allowedMethods())
