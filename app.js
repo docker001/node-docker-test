@@ -4,20 +4,33 @@ var koa    = require('koa'),
 	mongo  = require('koa-mongo'),
 	serve  = require('koa-static'),
 	path   = require('path'),
-	parse  = require('co-body')
+	parse  = require('co-body'),
+	session = require('koa-session-store')
 var app = koa()
+app.keys=['imtoy']
 router
-	.get('/data',function*(next){
-		this.body=yield this.mongo.collection('data').find().sort({time:1}).toArray()
+	.get('/user/getInfo',function*(){
+		this.body=this.session.user||{error:"not login"}
 	})
-	.post('/data',function*(next){
-		var data =(yield parse(this)).data
-		data=JSON.parse(data)
-		data.time=new Date()
-		this.body=yield this.mongo.collection('data').insert(data)
+	.post('/user/login',function*(){
+		var user=yield this.mongo.collection("users").findOne(yield parse.json(this))
+		this.session.user=user
+		this.body=user||{error:"用户名或密码错误"}
+	})
+	.get('/user/logout',function*(){
+		this.session=null
+		this.body={status:"ok"}
+	})
+	.get('/user/init',function*(next){
+		if(yield this.mongo.collection("users").findOne({account:"admin"}))return
+		var result={}
+		result.indexes=yield this.mongo.collection("users").ensureIndex({account:1},{unique: true})
+		result.creatAdmin=yield this.mongo.collection("users").insert({account:"admin",password:"admin",group:"admin"})
+		this.body=result
 	})
 app
 	.use(mongo({host:process.env["MONGODB_PORT_27017_TCP_ADDR"]||'localhost',port:process.env["MONGODB_PORT_27017_TCP_PORT"]||27017,user:process.env["MONGODB_USERNAME"]||'',pass:process.env["MONGODB_PASSWORD"]||' ',db:process.env["MONGODB_INSTANCE_NAME"]||'test'}))
+	.use(session({store:"cookie"}))
 	.use(logger())
 	.use(router.routes())
 	.use(router.allowedMethods())
