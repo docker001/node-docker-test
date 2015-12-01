@@ -3,6 +3,7 @@ var koa    = require('koa'),
 	logger = require('koa-logger'),
 	mongo  = require('koa-mongo'),
 	serve  = require('koa-static'),
+	cache  = require('koa-static-cache'),
 	path   = require('path'),
 	parse  = require('co-body'),
 	session = require('koa-session-store')
@@ -35,6 +36,7 @@ app
 	.use(logger())
 	.use(router.routes())
 	.use(router.allowedMethods())
+	.use(cache(path.join(__dirname,'public'),{maxAge:24*60*60}))
 	.use(serve("public"))
-	.listen(3000)
-console.log("start app success on port 3000")
+	.listen(80)
+console.log("start app success on port 80")
