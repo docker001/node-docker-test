@@ -36,5 +36,5 @@ app
 	.use(router.routes())
 	.use(router.allowedMethods())
 	.use(serve("public"))
-	.listen(80)
-console.log("start app success on port 80")
+	.listen(3000)
+console.log("start app success on port 3000")
