@@ -26,6 +26,7 @@ router
 		var result={}
 		result.indexes=yield this.mongo.collection("users").ensureIndex({account:1},{unique: true})
 		result.creatAdmin=yield this.mongo.collection("users").insert({account:"admin",password:"admin",group:"admin"})
+		result.creatTest=yield this.mongo.collection("users").insert({account:"test",password:"test",group:"user"})
 		this.body=result
 	})
 app
