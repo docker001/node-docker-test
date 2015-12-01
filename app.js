@@ -36,7 +36,7 @@ app
 	.use(logger())
 	.use(router.routes())
 	.use(router.allowedMethods())
-	//.use(cache(path.join(__dirname,'public'),{maxAge:24*60*60}))
+	.use(cache(path.join(__dirname,'public'),{maxAge:24*60*60}))
 	.use(serve("public"))
 	.listen(80)
 console.log("start app success on port 80")
