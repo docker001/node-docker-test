@@ -30,13 +30,15 @@ router
 		result.creatTest=yield this.mongo.collection("users").insert({account:"test",password:"test",group:"user"})
 		this.body=result
 	})
+	.get('/config/init',function*(next){
+	})
 app
 	.use(mongo({host:process.env["MONGODB_PORT_27017_TCP_ADDR"]||'localhost',port:process.env["MONGODB_PORT_27017_TCP_PORT"]||27017,user:process.env["MONGODB_USERNAME"]||'',pass:process.env["MONGODB_PASSWORD"]||' ',db:process.env["MONGODB_INSTANCE_NAME"]||'test'}))
 	.use(session({store:"cookie"}))
 	.use(logger())
 	.use(router.routes())
 	.use(router.allowedMethods())
-	.use(cache(path.join(__dirname,'public'),{maxAge:24*60*60}))
+	//.use(cache(path.join(__dirname,'public'),{maxAge:24*60*60}))
 	.use(serve("public"))
 	.listen(80)
 console.log("start app success on port 80")
