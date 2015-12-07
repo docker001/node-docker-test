@@ -15,7 +15,11 @@ router
 	.get('/:coll',auth(["news","jiedai"]),function*(){
 		var res=this.mongo.collection(this.params.coll)
 		var total=yield res.count()
-		res=res.find()
+		var search={}
+		if(this.query.key&&this.query.value){
+			search[this.query.key]=this.query.value
+		}
+		res=res.find(search)
 		if(this.query.sort){
 			var sort={}
 			sort[this.query.sort]=parseInt(this.query.sortdir||1)
@@ -36,6 +40,6 @@ router
 		this.body=yield this.mongo.collection(this.params.coll).remove({_id:ObjectId(this.params.id)})
 	})
 	.put('/:coll/:id',auth(),function*(){
-		this.body=yield this.mongo.collection(this.params.coll).update({_id:ObjectId(this.query.id)},{$set:this.query})
+		this.body=yield this.mongo.collection(this.params.coll).update({_id:ObjectId(this.params.id)},{$set:yield parse.json(this)})
 	})
 module.exports=router
