@@ -12,7 +12,7 @@ function auth(except){
 	}
 }
 router
-	.get('/:coll',auth(["news","jiedai"]),function*(){
+	.get('/:coll',auth(["news","jiedai","config"]),function*(){
 		var res=this.mongo.collection(this.params.coll)
 		var total=yield res.count()
 		var search={}
@@ -30,7 +30,7 @@ router
 		res=yield res.toArray()
 		this.body={data:res,total:total}
 	})
-	.get('/:coll/:id',auth(["news","jiedai"]),function*(){
+	.get('/:coll/:id',auth(["news","jiedai","config"]),function*(){
 		this.body=yield this.mongo.collection(this.params.coll).findOne({_id:ObjectId(this.params.id)})
 	})
 	.post('/:coll',auth(),function*(){
