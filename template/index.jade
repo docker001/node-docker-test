@@ -1,0 +1,218 @@
+include __components/iconmoon
+doctype html
+html
+	head
+		title 借贷宝贷款
+		block style
+			style
+				:stylus
+					a
+						color:#000;text-decoration:none
+					body,html
+						margin:0;padding:0
+					body
+						font-family:microsoft yahei,simhei;background-attachment:fixed
+					.section
+						text-align:center
+						.red
+							color:#e96656
+							&:hover
+								border-color:#e96656	
+						.green
+							color:#34d293
+							&:hover
+								border-color:#34d293	
+						.blue
+							color:#3ab0e2
+							&:hover
+								border-color:#3ab0e2
+						.yellow
+							color:#f7d861
+							&:hover
+								border-color:#f7d861
+					.nav
+						background:#222;height:50px;padding:0 100px
+						&>*
+							vertical-align:top
+						.logo
+							margin:0 20px;height:50px
+						.menu
+							display:inline-block
+							a
+								cursor:pointer;border-bottom:3px solid transparent;display:inline-block;line-height:47px;padding:0 20px;color:#aaa
+								&.active
+									background:#333;color:#fff;border-bottom:3px solid #3ab0e2
+								&:hover
+									border-bottom:3px solid #3ab0e2
+						.right
+							float:right
+					.s1
+						height:700px;position:relative;background:rgba(0,0,0,0.4);padding:200px 0 50px 0;color:#fff
+						.btn
+							cursor:pointer;color:#fff;width:150px;display:inline-block;line-height:40px;vertical-align:middle
+						.yellow
+							background:rgb(233,102,86)
+						.green
+							background:rgb(30,158,107)
+						.blue
+							background:#3ab0e2
+						.qr
+							position:absolute;bottom:20px;right:20px
+						.input
+							margin:20px
+							input
+								padding:0 10px;outline:none;width:298px;height:38px;border:1px solid rgb(30,158,107);vertical-align:middle
+						.carouse
+							min-height:40px;padding:10px 0;width:470px;display:inline-block;margin:20px;border-top:1px solid rgb(233,102,86);border-bottom:1px solid rgb(233,102,86)
+							.users
+								z-index:3;transform:translateY(30px);opacity:0;transition:all 0.5s;cursor:pointer;height:198px;text-align:left;position:relative;width:468px;background:#fff;display:inline-block;border:1px solid rgb(233,102,86)
+								.img,.texts
+									display:inline-block;vertical-align:top
+								.img
+									width:150px;height:100%;border-right:1px solid rgb(233,102,86)
+									img
+										width:100%;height:100%
+								.texts
+									width:317px
+									.text
+										border-bottom:1px dashed rgb(233,102,86);height:39px;line-height:40px;color:#000;text-indent:1em
+										&.noborder
+											border:none
+								&.small
+									height:auto;background:none;border:none;text-align:center
+									.img,.uni
+										display:none !important
+									.text
+										color:#fff;border:none;display:inline
+									.name
+										margin-right:60px
+								&.out
+									transform: translateY(-30px);opacity:0
+								&.in
+									transform: translateY(0);opacity:1
+						.talk
+							margin:20px;position: absolute;width: 100%;bottom: 200px;margin: 0;
+							.btn
+								width:470px;
+					.s2
+						background:url('bj.png');padding:100px 0
+						.title
+							font-size:40px
+						.small
+							padding:30px;color:#aaa
+						.card
+							display:inline-block;width:20%;height:400px;margin:1%;background:#fff;padding:1%;overflow:hidden;vertical-align:top
+							.head
+								font-weight:bold;line-height:50px
+							li
+								text-align:left;line-height:30px
+						.cir
+							border-radius:100px;display:inline-block;padding:25px;margin-bottom:20px;;width:50px;height:50px;border:solid 10px;border-color:#EEE;transition: all 0.2s ease-in-out;
+						.icon
+							width:50px;height:50px;fill:currentColor
+					.s3
+						background:#105153;color:#fff;padding:100px 0;
+						.title
+							font-size:40px
+						.news
+							display:inline-block;padding:1.5%;width:25%;vertical-align:top
+							header
+								border-bottom:1px solid;line-height:40px
+							.date
+								text-align:right;color:#AAA;margin:10px
+							p
+								min-height:300px
+						a
+								color:#fff
+					.s4
+						background:#272727;color:#fff;text-align:center
+						.info
+							display:inline-block;padding:50px
+							.icon
+								width:50px;fill:currentColor
+						small
+							color:#AAA
+	body(style="background:url('bg.jpg')")
+		block header
+			.nav
+				img.logo(src="logo.png")
+				.menu
+					a.active(href="/") 首页
+					a(href="news.html") 新闻
+					a(href="admin.html") 管理
+		block contenter
+			.section.s1
+				img(src="title.png")
+				h4 借贷宝贷款，贷出信服人生，理出金银财宝
+				.input
+					input#search(placeholder="请输入身份证号查询" onkeypress='if(event.keyCode==13){document.getElementById("searchbtn").click();return false;}')
+					.btn.green#searchbtn(onclick='getUser("/db/jiedai?limit=1&key=idcard&value="+document.getElementById("search").value)') 逾期查询
+				.carouse
+				.talk
+					a.btn.blue#qq(target="_blank" href="http://wpa.qq.com/msgrd?v=3&site=qq&menu=yes") 联系我们
+				.qr
+					img(src="QRcode.png")
+			.section.s2
+				.title 借贷宝贷款简介
+				.small 借贷宝贷款是依托借贷宝平台进行技术支持的金融服务平台，公司将提供贷款、理财服务、逾期查询与曝光、咨询和风控服务，全力保障投资人资金安全，公司主要致力于大学生借贷和白领借贷服务为主，本服务与借贷宝APP公司无关。
+				.card
+					.cir.red
+						+icon("heart")(class="red")
+					.head 熟人借贷,快速简单
+					li 熟人借贷,所有交易发生在朋友间
+					li 借款人实名,出借人匿名,避免当面开口,朋友谈钱不尴尬
+					li 无需审核,一键操作,钱来的速度只和你的人脉有关
+					li 利率自由,你想要的高收益这里全都有
+				.card
+					.cir.green
+						+icon("users")(class="green")
+					.head 随心赚钱,人脉变钱脉
+					li 全新的生活方式,更是全新投资理财方式
+					li 你的钱只投给信任的人，有钱能使钱生钱
+					li 独家赚利差功能，人脉让你没钱也能赚到钱
+					li 在这里，不只是借贷
+				.card
+					.cir.blue
+						+icon("rocket")(class="blue")
+					.head 立体催收,化解风险
+					li 专业地面催收团队遍布全国，及时回款助你一臂之力
+					li 违约信息推送好友，让逾期“损友”信用破产
+					li 顶尖法律顾问团全程提供专业法律支持
+					li 个人征信大数据云端实时采集，更全面，更放心
+				.card
+					.cir.yellow
+						+icon("accessibility")(class="yellow")
+					.head 多重护卫,极致安全
+					li 多重个人银行信息安全验证，更多验证，更全保障
+					li 银联校验个人身份信息，杜绝隐私泄露风险
+					li 账户安全由中国人民财产保险股份有限公司（PICC）承保
+					li 全程护航，随心使用无后顾之忧
+			.section.s3
+				.title 近期新闻
+				-each i in [1,2,3]
+					.news
+						header &nbsp;
+						.date &nbsp;
+						p &nbsp;
+				p
+					a(href="news.html") ----- 获取更多 -----
+		block footer
+			.section.s4
+				.info
+					+icon("location")(class="red")
+					p 公司地址
+					small#addr 重庆交通大学
+				.info
+					+icon("users")(class="green")
+					p 关于我们
+					small#about 新浪官方微博 && 微信公众平台
+				.info
+					+icon("phone")(class="blue")
+					p 联系电话
+					small#tel 023123456
+				.info
+					+icon("barcode")(class="yellow")
+					p 版权所有
+					small#copyright Copyright©2015-2016 某借贷公司
+		block script
+			script(src="index.js")

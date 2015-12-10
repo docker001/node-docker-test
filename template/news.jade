@@ -1,0 +1,30 @@
+extends index
+append style
+	style
+		:stylus
+			.s5
+				background:#fff
+				#list
+					height:700px;width:1000px;margin:0 auto;
+			.center
+				text-align:center
+			.sub
+				padding:60px 20px
+				.list
+					counter-increment:num;padding:3px 0;text-indent:1em;height:30px;cursor:pointer
+					&:before
+						content:counter(num);background-color:#2e89b8;width:20px;height:20px;display:block;float:left;text-align:center;color:#fff;text-indent:0
+					.date
+						float:right
+block header
+	.nav
+		img.logo(src="logo.png")
+		.menu
+			a(href="/") 首页
+			a.active(href="news.html") 新闻
+			a(href="admin.html") 管理
+block contenter
+	.s5
+		#list
+block script
+	script(src="news.js")
