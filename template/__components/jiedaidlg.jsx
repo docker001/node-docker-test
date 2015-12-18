@@ -29,7 +29,9 @@ export default class NewsDlg  extends React.Component{
 		<Dialog title="添加借贷信息"
 				actions={[{text:"取消"},{text:"确定",onTouchTap:this.post.bind(this),ref:"submit"}]}
 				actionFocus="submit" open={this.props.show}
-				onRequestClose={this.props.onDlgClose}>	
+				onRequestClose={this.props.onDlgClose}
+				autoDetectWindowHeight={true}
+				autoScrollBodyContent={true}>	
 			<TextField fullWidth={true} floatingLabelText="姓名" ref="name"/>
 			<TextField fullWidth={true} floatingLabelText="性别" ref="sex"/>
 			<TextField fullWidth={true} floatingLabelText="地址" ref="address"/>

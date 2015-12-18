@@ -11,7 +11,9 @@ class LoginDlg  extends React.Component{
 		<Dialog title="登录"
 				actions={[{text:"取消"},{text:"登录",onTouchTap:()=>this.props.onLogin({account:this.refs.account.getValue(),password:this.refs.password.getValue()}),ref:"submit"}]}
 				actionFocus="submit" open={this.props.loginshow}
-				onRequestClose={this.props.onDlgClose} >
+				onRequestClose={this.props.onDlgClose}
+				autoDetectWindowHeight={true}
+				autoScrollBodyContent={true}>
 			<TextField fullWidth={true} floatingLabelText="账号" ref="account"/>
 			<TextField fullWidth={true} floatingLabelText="密码" ref="password" type="password" />
 		</Dialog>
