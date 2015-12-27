@@ -1,7 +1,8 @@
 import React from "react"
 import {Card,CardTitle,CardHeader,Avatar} from "material-ui"
 import {connect} from "react-redux"
-class UserInfo extends React.Component{
+@connect(state=>({user:state.user}))
+export default class UserInfo extends React.Component{
 	render(){return(
 		<Card style={{width:500}}>
 			<CardTitle title="个人信息" />
@@ -9,6 +10,3 @@ class UserInfo extends React.Component{
 		</Card>
 	)}
 }
-export default connect(
-	state=>({user:state.user})
-)(UserInfo)

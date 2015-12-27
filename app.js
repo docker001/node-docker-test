@@ -10,7 +10,8 @@ var koa    = require('koa'),
 	session = require('koa-session-store'),
 	ObjectId = require('mongodb').ObjectId,
 	routerDB = require('./router/db'),
-	routerUser =require('./router/user')
+	routerUser =require('./router/user'),
+	proxy = require('koa-proxy')
 var app = koa()
 app.keys=['imtoy']
 router
@@ -29,7 +30,8 @@ app
 	.use(gzip())
 	.use(router.routes())
 	.use(router.allowedMethods())
-	.use(cache("dest"))
-	.use(serve("dest"))
+	.use(cache("public"))
+	.use(serve("public"))
+	//.use(proxy({host:'http://localhost:8080'}))
 	.listen(80)
 console.log("start app success on port 80")

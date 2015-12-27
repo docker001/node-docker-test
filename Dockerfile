@@ -1,5 +1,5 @@
 FROM node
 COPY . .
-RUN npm install
+RUN npm install --production
 CMD ["npm","start"]
 EXPOSE 80

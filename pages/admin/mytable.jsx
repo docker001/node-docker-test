@@ -1,7 +1,7 @@
-import React from "react"
+import React,{Component} from "react"
 import {IconButton,SvgIcon,Table,TableRowColumn,TableRow,TableBody,TableHeader,TableFooter,TableHeaderColumn} from "material-ui"
 import {Pagination} from "./rctui"
-export default class extends React.Component{
+export default class extends Component{
 	constructor(props){
 		super(props)
 		if(props.onLoaded)props.onLoaded()

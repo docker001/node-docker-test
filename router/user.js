@@ -5,7 +5,8 @@ router
 		this.body=this.session.user||{error:"not login"}
 	})
 	.post('/login',function*(){
-		var user=yield this.mongo.collection("users").findOne(yield parse.json(this))
+		var data=yield parse.json(this)
+		var user=yield this.mongo.collection("users").findOne({account:data.account,password:data.password})
 		this.session.user=user
 		this.body=user||{error:"用户名或密码错误"}
 	})
