@@ -93,7 +93,11 @@ class App extends Component{
 					<IconButton iconStyle={{width:30,height:30}} onTouchTap={()=>window.location="/admin.html"}>
 						<ActionBuild/>
 					</IconButton>
-				} style={{background:"#000",padding:"0 100px",position:"fixed",top:0,width:"100%"}} iconElementLeft={<img src={require("./logo.png")}/>} />
+				} style={{background:"#000",padding:"0 100px",position:"fixed",top:0,width:"100%"}} iconElementLeft={
+					<a href="/">
+						<img src={require("./logo.png")}/>
+					</a>
+				} />
 				<Section1/>
 				<Section2/>
 				<Section3/>

@@ -3,7 +3,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var config={
 	entry:{
 		index:'./pages/index',
-		admin:'./pages/admin'
+		admin:'./pages/admin',
+		news:'./pages/news'
 	},
 	plugins:[
 		new webpack.optimize.CommonsChunkPlugin({name:"common",filename:"[name].js"})	
