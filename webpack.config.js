@@ -16,7 +16,10 @@ var config={
 	module:{
 		loaders:[
 			{test:/\.jsx?$/,loader:"babel",exclude:/node_modules/},
-			{test: /\.(png|jpg)$/,loader:'url?limit=8192'}
+			{test: /\.(png|jpg)$/,loader:'url?limit=8192'},
+			{test: /\.css$/, loader:'style!css'},
+			{test: /\.less$/, loader:'style!css!less'},
+			{test: /\.(woff|woff2|eot|ttf|svg)$/,loader:'url?limit=8192000'}
 		]
 	},
 	resolve: {

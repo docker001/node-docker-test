@@ -5,11 +5,11 @@ var koa    = require('koa'),
 	serve  = require('koa-static'),
 	gzip  = require('koa-gzip'),
 	cache  = require('koa-static-cache'),
-	path   = require('path'),
-	parse  = require('co-body'),
+	parse  = require('co-busboy'),
+	path = require('path'),
 	session = require('koa-session-store'),
-	ObjectId = require('mongodb').ObjectId,
 	routerDB = require('./router/db'),
+	fs = require('fs'),
 	routerUser =require('./router/user'),
 	proxy = require('koa-proxy')
 var app = koa()
@@ -17,6 +17,16 @@ app.keys=['imtoy']
 router
 	.use('/user',routerUser.routes(),routerUser.allowedMethods())
 	.use('/db',routerDB.routes(),routerDB.allowedMethods())
+	.post('/upload',function*(){
+		var parts = parse(this,{autoFields:true})
+		var part
+		this.body=[]
+		while(part = yield parts){
+			var stream=fs.createWriteStream(path.join('upload',Math.random().toString().substring(2)+path.extname(part.filename)))
+			part.pipe(stream)
+			this.body.push({name:part.filename,path:stream.path})
+		}
+	})
 app
 	.use(mongo({
 		host:process.env["MONGODB_PORT_27017_TCP_ADDR"]||'localhost',

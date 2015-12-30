@@ -1,6 +1,7 @@
 import React,{Component} from "react"
 import {IconButton,SvgIcon,Table,TableRowColumn,TableRow,TableBody,TableHeader,TableFooter,TableHeaderColumn} from "material-ui"
-import {Pagination} from "./rctui"
+import Pagination from "react-pagination-cn"
+import "react-pagination-cn/src/pagination.css"
 export default class extends Component{
 	constructor(props){
 		super(props)
@@ -50,7 +51,7 @@ export default class extends Component{
 				<TableFooter>
 					<TableRow>
 						<TableRowColumn colSpan="4" style={{textAlign:'center'}}>
-							<Pagination total={this.props.total||0} size={10} onChange={this.props.onPaging} />
+							<Pagination totalPage={Math.ceil(this.props.total/10)} selectPage={this.props.onPaging} />
 						</TableRowColumn>
 					</TableRow>
 				</TableFooter>
