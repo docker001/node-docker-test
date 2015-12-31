@@ -4,6 +4,7 @@ import {MenuItem,IconMenu,SvgIcon,AppBar,IconButton,FlatButton,List,ListItem,Dia
 import {ActionBuild,ActionFace,ActionAccessibility,ActionVerifiedUser,SocialGroup,SocialLocationCity,ImageTagFaces,CommunicationCall,ActionCopyright} from "material-ui/lib/svg-icons"
 import {connect} from "react-redux"
 import request from "superagent"
+import {VelocityTransitionGroup} from "velocity-react"
 
 export class Header extends Component{
 	render(){return(
@@ -18,6 +19,41 @@ export class Header extends Component{
 		} />
 	)}
 }
+class RollList extends Component{
+	constructor(props){
+		super(props)
+		this.state={list:[],i:3}
+		request
+			.get("/db/jiedai?&limit=3")
+			.end((err,res)=>{
+				if(!res.body.data.length)return
+				this.setState({list:res.body.data})
+			})
+		setInterval(()=>{
+			request
+				.get("/db/jiedai?&limit=1&skip="+this.state.i)
+				.end((err,res)=>{
+					if(!res.body.data.length)return this.setState({i:0})
+					var list=this.state.list
+					list.shift()
+					list.push(res.body.data[0])
+					this.setState({list,i:this.state.i+1})
+				})
+		},2000)
+	}
+	render(){return(
+		<div style={{borderTop:"red 1px solid",borderBottom:"red 1px solid",width:470,margin:"50px auto"}}>
+		<VelocityTransitionGroup enter={{animation: "slideDown"}} leave={{animation: "slideUp"}}>
+			{this.state.list.map(it=>(
+				<p style={{cursor:"pointer"}} key={it._id} onClick={()=>{this.props.showIt(it)}}>
+					<span style={{margin:60}}>逾期人：{it.name}</span>
+					<span style={{margin:60}}>逾期金额：{it.yuqijine}元</span>
+				</p>
+			))}
+		</VelocityTransitionGroup>
+		</div>
+	)}
+}
 class Search extends Component{
 	constructor(props){
 		super(props)
@@ -29,7 +65,6 @@ class Search extends Component{
 			.get("/db/jiedai?key=idcard&limit=1&value="+idcard)
 			.end((err,res)=>{
 				if(!res.body.data.length)return alert("没有该记录")
-				console.log(res.body.data[0])
 				this.setState({info:res.body.data[0],isOpen:true})
 			})
 	}
@@ -52,6 +87,7 @@ class Search extends Component{
 				<p>逾期金额:{this.state.info.yuqijine}</p>
 				<p>信誉情况:{this.state.info.xinyu}</p>
 			</Dialog>
+			<RollList showIt={it=>this.setState({info:it,isOpen:true})}/>
 		</div>
 	)}
 }
@@ -70,8 +106,6 @@ export class Section1 extends Component{
 			<img src={require("./title.png")} />
 			<h4>借贷宝贷款，贷出信服人生，理出金银财宝</h4>
 			<Search/>
-			<div style={{height:150}}>
-			</div>
 			<a style={{textDecoration:"none",background:"#3ab0e2",cursor:"pointer",color:"#fff",width:470,display:"inline-block",lineHeight:"40px",verticalAlign:"middle"}} target="_blank" href={"http://wpa.qq.com/msgrd?v=3&site=qq&menu=yes&uin="+this.state.qq}>联系我们</a>
 			<div><img style={{float:"right"}} src={require("./QRcode.png")} /></div>
 		</section>
