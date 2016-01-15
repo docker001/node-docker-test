@@ -29,7 +29,7 @@ class RollList extends Component{
 				if(!res.body.data.length)return
 				this.setState({list:res.body.data})
 			})
-		setInterval(()=>{
+		 this.timer=setInterval(()=>{
 			request
 				.get("/db/jiedai?&limit=1&skip="+this.state.i)
 				.end((err,res)=>{
@@ -40,6 +40,9 @@ class RollList extends Component{
 					this.setState({list,i:this.state.i+1})
 				})
 		},2000)
+	}
+	componentWillUnmount(){
+		clearInterval(this.timer)
 	}
 	render(){return(
 		<div style={{borderTop:"red 1px solid",borderBottom:"red 1px solid",width:470,margin:"50px auto"}}>

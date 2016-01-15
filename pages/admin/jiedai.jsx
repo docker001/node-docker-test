@@ -67,7 +67,7 @@ export default class JiedaiPage extends Component{
 	render(){return(
 		<article>
 			<MyTable title="借贷管理" 
-					 keys={["头像","姓名","性别","地址","身份证号","起始时间","借贷期限","逾期天数","贷款金额","平台","联系电话","逾期金额","信誉情况"]} 
+					 keys={["ID","头像","姓名","性别","地址","身份证号","起始时间","借贷期限","逾期天数","贷款金额","平台","联系电话","逾期金额","信誉情况"]} 
 					 items={this.props.items} 
 					 total={this.props.total}
 					 onLoaded={()=>this.props.onData(this.props.index||1)}

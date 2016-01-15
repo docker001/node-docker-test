@@ -66,6 +66,7 @@ export function onJiedaiData(dispatch){
 			.get("/db/jiedai?skip="+(i-1)*10+"&limit=10&sort=date&sortdir=-1")
 			.end((err,res)=>{
 				var data=res.body.data.map(it=>([
+					it._id,
 					<img src={it.head} style={{width:100,height:100}} />,
 					it.name,
 					it.sex,

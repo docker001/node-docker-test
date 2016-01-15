@@ -19,7 +19,7 @@ export default class extends Component{
 						<TableHeaderColumn colSpan={(this.props.keys||[]).length} style={{textAlign:'center',fontSize:30}}>{this.props.title}</TableHeaderColumn>
 					</TableRow>
 					<TableRow>
-						<TableHeaderColumn>
+						<TableHeaderColumn colSpan={(this.props.keys||[]).length}>
 							<IconButton onTouchTap={this.props.onAdd}>
 								<SvgIcon>
 									<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
@@ -31,7 +31,6 @@ export default class extends Component{
 								</SvgIcon>
 							</IconButton>
 						</TableHeaderColumn>
-						<TableHeaderColumn colSpan={(this.props.keys||[]).length-1}></TableHeaderColumn>
 					</TableRow>
 					<TableRow>{
 						(this.props.keys||[]).map((it,i)=>
